@@ -4,6 +4,9 @@
   <lable for="search">Search</lable>
   <input id="search" name="search" v-model="searchValue" @input="handleInput" />
 </div>
+<ul>
+  <li v-for="item in resualt" :key="item.data[0].nasa_id"><p>{{item.data[0].description}}</p></li>
+</ul>
   </div>
 </template>
 
@@ -25,7 +28,7 @@ export default {
     handleInput: debounce(function () {
       axios.get(`${API}?q=${this.searchValue}&media_type=image`)
         .then((response) => {
-          console.log(response);
+          this.resualt = response.data.collection.items;
         })
         .catch((error) => {
           console.log(error);
