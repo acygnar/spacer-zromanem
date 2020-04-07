@@ -1,28 +1,63 @@
 <template>
-<div class="searchWrapper">
   <input
   id="search"
   name="search"
-  v-model="searchValue"
-  @input="handleInput" />
-</div>
+  :class= "{ dark : dark }"
+  autocomplete="off"
+  :value="value"
+  @input="handleChange"
+  />
 </template>
 <script>
 export default {
   name: 'SearchInput',
+  props: {
+    value: {
+      type: String,
+      required: true,
+    },
+    dark: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  methods: {
+    handleChange(e) {
+      this.$emit('input', e.target.value);
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
-.searchWrapper{
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
+input {
+  margin-top:50px;
+  display:flex;
   width:250px;
-}
-input{
+  color:white;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 300;
   height: 30px;
   border: 0;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid white;
   background: none;
+  transition: box-shadow .5s;
+
+  @media(min-width: 1024px){
+      font-weight: 600;
+  }
+}
+  input:focus {
+    outline: none;
+    box-shadow: 0 10px 20px -8px rgba(255,255,255, .5);
+}
+
+.dark{
+  color:#1E3D4A;
+  border-bottom-color: #1E3D4A;
+}
+ .dark:focus {
+    outline: none;
+    box-shadow: 0 10px 20px -8px rgba(#1E3D4A, .5);
 }
 </style>
